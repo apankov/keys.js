@@ -2,7 +2,7 @@
 
 # Publish documentation to the Eris website.
 
-base_name=basename $PWD
+base_name=$(basename $PWD)
 user_name=eris-ltd
 docs_site=docs.erisindustries.com
 repo=`pwd`
