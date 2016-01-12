@@ -1,0 +1,9 @@
+keys:
+  image: eris/keys:latest
+
+test:
+  build: .
+  volumes:
+    - $PWD/../..:/usr/src/app
+  links:
+    - keys

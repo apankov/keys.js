@@ -1,0 +1,17 @@
+machine:
+  node:
+    version: 4.2.2  
+  services:
+    - docker
+
+test:
+  override:
+    - npm run test:all
+
+deployment:
+  npm:
+    branch: master
+    commands:
+      - printf "$NPM_USERNAME\n$NPM_PASSWORD\n$NPM_EMAIL\n" | npm login
+      - npm run publish
+      - ./publishDoc.sh

@@ -1,0 +1,52 @@
+{
+  "name": "eris-keys",
+  "version": "0.0.0",
+  "description": "a JavaScript client library for eris-keys",
+  "main": "lib/index.js",
+  "scripts": {
+    "coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
+    "doc": "jsdoc --configure JSDoc/conf.json --destination doc README.md lib",
+    "doc:watch": "watch 'npm run doc' lib",
+    "integration": "cd test/integration; docker-compose run test",
+    "lint": "eslint lib test",
+    "outdated": "ncu --error-level 2",
+    "publish": "publish",
+    "test": "istanbul cover _mocha",
+    "test:all": "npm run outdated && npm run lint && npm test && npm run coverage && npm run integration"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/eris-ltd/eris-keys.js.git"
+  },
+  "keywords": [
+    "Eris",
+    "blockchain",
+    "keys",
+    "ledger",
+    "contracts"
+  ],
+  "author": "David Braun",
+  "license": "GPL-3.0",
+  "bugs": {
+    "url": "https://github.com/eris-ltd/eris-keys.js/issues"
+  },
+  "homepage": "https://github.com/eris-ltd/eris-keys.js#README.md",
+  "devDependencies": {
+    "ed25519-supercop": "^1.0.2",
+    "eslint": "^1.10.3",
+    "istanbul": "^0.4.2",
+    "jsdoc": "^3.4.0",
+    "longjohn": "^0.2.11",
+    "mocha": "^2.3.4",
+    "nock": "^5.2.1",
+    "npm-check-updates": "^2.5.6",
+    "publish": "^0.5.0",
+    "seed-random": "^2.2.0",
+    "watch": "^0.17.1"
+  },
+  "dependencies": {
+    "bluebird": "^3.1.1",
+    "lodash": "^3.10.1",
+    "request-promise": "^1.0.2"
+  }
+}
