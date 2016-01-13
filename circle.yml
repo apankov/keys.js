@@ -4,10 +4,6 @@ machine:
   services:
     - docker
 
-test:
-  override:
-    - npm run test:all
-
 deployment:
   npm:
     branch: master
