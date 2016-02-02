@@ -10,7 +10,7 @@ First start a key server:
 
 `$ eris services start keys --publish`
 
-You need to know the IP address and port number of the key server.  If you're using [Docker Machine](https://docs.docker.com/machine/) you can find out the IP address with the command `docker-machine ip default`.  Discover the port mapping with the command `eris services inspect keys NetworkSettings.Ports`.
+You need to know the IP address and port number of the key server.  If you're on Linux, use `localhost` for the IP address.  Otherwise, you can find out the IP address with the command `docker-machine ip default`.  Discover the port mapping with the command `eris services inspect keys NetworkSettings.Ports`.
 
 In the example below, the IP address is `192.168.99.100` and the port number is `32769`:
 
