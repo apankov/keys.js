@@ -1,13 +1,11 @@
 {
     "rules": {
-        "indent": [
-            2,
-            2
-        ],
+        "indent": [2, 2, {"SwitchCase": 1}],
         "linebreak-style": [
             2,
             "unix"
         ],
+        "max-len": 1,
         "no-console": 0,
         "semi": [
             2,
