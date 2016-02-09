@@ -58,21 +58,20 @@ describe("a client for eris-keys", function () {
           Error: "open ~/.eris/keys/names/badger: no such file or directory"
         })
       .post('/sign')
-        .reply(200, function (uri, requestBody) {
+        .reply(200, function (uri, request) {
           var
             message;
 
-          message = Buffer(JSON.parse(requestBody).msg, 'hex');
+          message = Buffer(request.msg, 'hex');
 
           return {Response: ed.sign(message, keyPair.publicKey,
             keyPair.secretKey).toString('hex')};
         })
       .post('/verify')
-        .reply(200, function (uri, requestBody) {
+        .reply(200, function (uri, request) {
           var
-            request, message, signature, publicKey;
+            message, signature, publicKey;
 
-          request = JSON.parse(requestBody);
           message = Buffer(request.msg, 'hex');
           signature = Buffer(request.sig, 'hex');
           publicKey = Buffer(request.pub, 'hex');
