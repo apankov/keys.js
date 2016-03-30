@@ -9,7 +9,7 @@
     "doc": "jsdoc --configure JSDoc/conf.json --destination doc README.md lib",
     "doc:watch": "watch 'npm run doc' lib",
     "outdated": "ncu --error-level 2",
-    "publish": "npm run outdated && publish",
+    "publish": "npm run outdated && bundle-dependencies update && publish",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "istanbul cover _mocha",
     "test:integration": "cd test/integration; docker-compose build && docker-compose run test",
@@ -33,6 +33,7 @@
   },
   "homepage": "https://github.com/eris-ltd/eris-keys.js#README.md",
   "devDependencies": {
+    "bundle-dependencies": "^1.0.2",
     "ed25519-supercop": "^1.0.2",
     "eslint": "^2.5.3",
     "husky": "^0.11.4",
@@ -49,10 +50,5 @@
     "bluebird": "^3.1.1",
     "lodash": "^4.0.0",
     "request-promise": "^2.0.0"
-  },
-  "bundledDependencies": [
-    "bluebird",
-    "lodash",
-    "request-promise"
-  ]
+  }
 }
