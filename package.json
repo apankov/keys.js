@@ -4,13 +4,12 @@
   "description": "a JavaScript client library for eris-keys",
   "main": "lib/index.js",
   "scripts": {
+    "precommit": "eslint lib test",
     "coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
     "doc": "jsdoc --configure JSDoc/conf.json --destination doc README.md lib",
     "doc:watch": "watch 'npm run doc' lib",
-    "lint": "eslint lib test",
     "outdated": "ncu --error-level 2",
     "publish": "npm run outdated && publish",
-    "pretest": "npm run lint",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "istanbul cover _mocha",
     "test:integration": "cd test/integration; docker-compose run test",
@@ -36,6 +35,7 @@
   "devDependencies": {
     "ed25519-supercop": "^1.0.2",
     "eslint": "^1.10.3",
+    "husky": "^0.11.4",
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
     "longjohn": "^0.2.11",
