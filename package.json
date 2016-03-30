@@ -12,7 +12,7 @@
     "publish": "npm run outdated && publish",
     "test": "npm run test:unit && npm run test:integration",
     "test:unit": "istanbul cover _mocha",
-    "test:integration": "cd test/integration; docker-compose run test",
+    "test:integration": "cd test/integration; docker-compose build && docker-compose run test",
     "posttest": "npm run coverage"
   },
   "repository": {
