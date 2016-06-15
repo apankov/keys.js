@@ -4,16 +4,15 @@
   "description": "a JavaScript client library for eris-keys",
   "main": "lib/index.js",
   "scripts": {
-    "precommit": "eslint lib test",
-    "coverage": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
+    "precommit": "standard",
     "doc": "jsdoc --configure JSDoc/conf.json --destination doc README.md lib",
     "doc:watch": "watch 'npm run doc' lib",
     "outdated": "ncu --error-level 2",
     "publish": "npm run outdated && bundle-dependencies update && publish",
-    "test": "npm run test:unit && npm run test:integration",
-    "test:unit": "istanbul cover _mocha",
-    "test:integration": "cd test/integration; docker-compose build && docker-compose run test",
-    "posttest": "npm run coverage"
+    "test": "npm run unit && npm run integration",
+    "unit": "istanbul cover _mocha -- test/unit",
+    "integration": "ERIS_PULL_APPROVE=true eris services start keys --publish && mocha test/integration",
+    "posttest": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
   },
   "repository": {
     "type": "git",
@@ -35,20 +34,31 @@
   "devDependencies": {
     "bundle-dependencies": "^1.0.2",
     "ed25519-supercop": "^1.0.2",
-    "eslint": "^2.5.3",
     "husky": "^0.11.4",
     "istanbul": "^0.4.2",
     "jsdoc": "^3.4.0",
     "mocha": "^2.3.4",
     "nock": "^7.7.2",
     "npm-check-updates": "^2.5.6",
+    "pegjs": "^0.9.0",
     "publish": "^0.5.0",
+    "rewire": "^2.5.1",
     "seed-random": "^2.2.0",
+    "standard": "^7.1.2",
     "watch": "^0.17.1"
   },
   "dependencies": {
     "bluebird": "^3.1.1",
     "lodash": "^4.0.0",
     "request-promise": "^2.0.0"
+  },
+  "standard": {
+    "globals": [
+      "after",
+      "before",
+      "beforeEach",
+      "describe",
+      "it"
+    ]
   }
 }

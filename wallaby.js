@@ -1,11 +1,12 @@
 module.exports = function () {
   return {
     files: [
-      'lib/*.js'
+      'lib/*.js',
+      {pattern: 'lib/*.pegjs', instrument: false}
     ],
 
     tests: [
-      'test/*.js'
+      'test/unit/*.js'
     ],
 
     env: {
@@ -13,5 +14,5 @@ module.exports = function () {
     },
 
     testFramework: 'mocha'
-  };
-};
+  }
+}
