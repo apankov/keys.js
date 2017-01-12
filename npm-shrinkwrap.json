@@ -1,6 +1,6 @@
 {
   "name": "eris-keys",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "dependencies": {
     "bluebird": {
       "version": "3.4.0",
