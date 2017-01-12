@@ -3408,8 +3408,7 @@
     "pegjs": {
       "version": "0.9.0",
       "from": "pegjs@latest",
-      "resolved": "https://registry.npmjs.org/pegjs/-/pegjs-0.9.0.tgz",
-      "dev": true
+      "resolved": "https://registry.npmjs.org/pegjs/-/pegjs-0.9.0.tgz"
     },
     "publish": {
       "version": "0.6.0",

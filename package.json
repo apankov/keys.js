@@ -9,6 +9,7 @@
   "dependencies": {
     "bluebird": "3.4.0",
     "lodash": "4.13.1",
+    "pegjs": "0.9.0",
     "request-promise": "3.0.0"
   },
   "devDependencies": {
@@ -20,7 +21,6 @@
     "mocha": "2.5.3",
     "nock": "8.0.0",
     "npm-check-updates": "2.6.7",
-    "pegjs": "0.9.0",
     "publish": "0.6.0",
     "rewire": "2.5.1",
     "seed-random": "2.2.0",
