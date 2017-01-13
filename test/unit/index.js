@@ -1,10 +1,9 @@
 'use strict'
 
-var rewire = require('rewire')
 var assert = require('assert')
 var crypto = require('crypto')
 var ed = require('ed25519-supercop')
-var keys = rewire('../../lib')
+var keys = require('../../lib')
 var nock = require('nock')
 var random = require('seed-random')('marmot')
 
