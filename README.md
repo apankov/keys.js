@@ -23,9 +23,9 @@ describe('a client for eris-keys', function () {
     function () {
       this.timeout(10 * 1000)
 
-      // Open a connection to the server.
+      // Connect to the key server.
       return keys.serviceUrl('services', 'keys', 4767).then((url) => {
-        const server = keys.open(url)
+        const server = keys.connect(url)
 
         // Generate a new key pair.
         return server.generateKeyPair().then((keyPairId) => {

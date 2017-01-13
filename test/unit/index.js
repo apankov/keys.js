@@ -80,7 +80,7 @@ describe('a client for eris-keys', function () {
     keyPair = ed.createKeyPair(randomSeed())
     address = addressFromKey(keyPair.publicKey)
     identifier = {address: address}
-    server = keys.open('http://localhost:4767/')
+    server = keys.connect('http://localhost:4767/')
   })
 
   beforeEach(function () {
