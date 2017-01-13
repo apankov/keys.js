@@ -9,19 +9,17 @@ var nock = require('nock')
 var Promise = require('bluebird')
 var random = require('seed-random')('marmot')
 
-function mockExec (portMap) {
-  return function (command, options) {
-    return Promise.resolve(command === 'docker-machine ip'
+const mockExec = (portMap) =>
+  (command) =>
+    Promise.resolve(command === 'docker-machine ip $(docker-machine active)'
       ? '192.168.99.100'
       : portMap)
-  }
-}
 
 describe('eris inspection', function () {
   it('gets the port mappings for a chain', function () {
-    keys.__set__('childProcess', {execAsync: mockExec(`map[1337/tcp:[{0.0.0.0 33121}] 46656/tcp:[{0.0.0.0 33120}] 46657/tcp:[{0.0.0.0 33119}]]\n`)})
+    const exec = mockExec(`33121`)
 
-    return keys.serviceUrl('chain', 'blockchain', 1337).then(function (url) {
+    return keys.serviceUrl('chain', 'blockchain', 1337, {exec}).then((url) => {
       assert.deepEqual(url, {
         protocol: 'http:',
         hostname: '192.168.99.100',
@@ -31,14 +29,27 @@ describe('eris inspection', function () {
   })
 
   it('gets the port mapping for Eris Keys', function () {
-    keys.__set__('childProcess', {
-      execAsync: mockExec('map[4767/tcp:[{0.0.0.0 33128}]]\n')
-    })
+    const exec = mockExec('33128')
 
-    return keys.serviceUrl('services', 'keys', 4767).then(function (map) {
-      assert.deepEqual(map, {
+    return keys.serviceUrl('services', 'keys', 4767, {exec}).then((url) => {
+      assert.deepEqual(url, {
         protocol: 'http:',
         hostname: '192.168.99.100',
+        port: 33128
+      })
+    })
+  })
+
+  it('gets the port mapping for Eris Keys with localhost', function () {
+    const exec = (command) =>
+        command === 'docker-machine ip $(docker-machine active)'
+          ? Promise.reject()
+          : Promise.resolve(33128)
+
+    return keys.serviceUrl('services', 'keys', 4767, {exec}).then((url) => {
+      assert.deepEqual(url, {
+        protocol: 'http:',
+        hostname: 'localhost',
         port: 33128
       })
     })
