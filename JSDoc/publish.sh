@@ -20,8 +20,8 @@ mkdir --parents $name
 cd $name
 rm --force --recursive $version
 mv $doc $version
-rm --force latest
-ln --symbolic $version latest
+rm --force --recursive latest
+cp --archive $version latest
 
 # Commit and push.
 git config user.name "Billings the Bot"
