@@ -1,39 +1,33 @@
 'use strict'
 
-var assert = require('assert')
-var keys = require('../../lib')
-var Promise = require('bluebird')
+const assert = require('assert')
+const keys = require('../../lib')
 
 describe('a client for eris-keys', function () {
   it('generates a key, signs a message, and verifies the signature',
-    function (done) {
+    function () {
       this.timeout(10 * 1000)
 
       // Open a connection to the server.
-      keys.serviceUrl('services', 'keys', 4767).then(function (url) {
-        console.log('URL', url)
-        keys.open(url).then(function (server) {
-          // Generate a new key pair.
-          server.generateKeyPair().then(function (keyPair) {
-            var message
+      return keys.serviceUrl('services', 'keys', 4767).then((url) => {
+        const server = keys.open(url)
 
-            message = 'a message in a bottle'
+        // Generate a new key pair.
+        return server.generateKeyPair().then((keyPairId) => {
+          const message = 'a message in a bottle'
 
-            Promise.all([
-              // Get the public key of the key pair.
-              server.publicKeyFor(keyPair),
+          return Promise.all([
+            // Get the public key of the key pair.
+            server.publicKeyFor(keyPairId),
 
-              // Sign the message.
-              server.sign(message, keyPair)
-            ]).spread(function (publicKey, signature) {
-              server.verifySignature(message, signature, publicKey)
-                .then(function (valid) {
-                  assert(valid)
-                  server.close()
-                  done()
-                })
-            })
-          })
+            // Sign the message.
+            server.sign(message, keyPairId)
+          ]).then(([publicKey, signature]) =>
+            server.verifySignature(message, signature, publicKey)
+              .then((valid) => {
+                assert(valid)
+              })
+          )
         })
       })
     })

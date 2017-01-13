@@ -1,5 +1,7 @@
 This is a JavaScript client library to facilitate interaction with an [Eris Keys](https://github.com/eris-ltd/eris-keys) server.
 
+Note:  Eris Keys does not expose an interface to get private keys.
+
 # Installation
 
 `$ npm install eris-keys`
@@ -10,59 +12,41 @@ First start a key server:
 
 `$ eris services start keys --publish`
 
-You need to know the IP address and port number of the key server.  If you're on Linux, use `localhost` for the IP address.  Otherwise, you can find out the IP address with the command `docker-machine ip default`.  Discover the port mapping with the command `eris services inspect keys NetworkSettings.Ports`.
-
-In the example below, the IP address is `192.168.99.100` and the port number is `32769`:
-
-```shell
-$ docker-machine ip default
-192.168.99.100
-$ eris services inspect keys NetworkSettings.Ports
-map[4767/tcp:[{0.0.0.0 32769}]]
-```
-
-Once you have those numbers, pass them as arguments to the `keys.open` function, replacing `IPADDRESS` and `PORT` below.
-
 ```JavaScript
-'use strict';
+'use strict'
 
-var
-  assert = require('assert'),
-  keys = require('eris-keys'),
-  Promise = require('bluebird');
+const assert = require('assert')
+const keys = require('../../lib')
 
-describe("a client for eris-keys", function () {
-  it("generates a key, signs a message, and verifies the signature",
-    function (done) {
+describe('a client for eris-keys', function () {
+  it('generates a key, signs a message, and verifies the signature',
+    function () {
+      this.timeout(10 * 1000)
+
       // Open a connection to the server.
-      keys.open(IPADDRESS, PORT).then(function (server) {
+      return keys.serviceUrl('services', 'keys', 4767).then((url) => {
+        const server = keys.open(url)
+
         // Generate a new key pair.
-        server.generateKeyPair().then(function (keyPair) {
-          var
-            message;
+        return server.generateKeyPair().then((keyPairId) => {
+          const message = 'a message in a bottle'
 
-          message = "a message in a bottle";
-
-          Promise.all([
+          return Promise.all([
             // Get the public key of the key pair.
-            server.publicKeyFor(keyPair),
+            server.publicKeyFor(keyPairId),
 
             // Sign the message.
-            server.sign(message, keyPair)
-          ]).spread(function (publicKey, signature) {
+            server.sign(message, keyPairId)
+          ]).then(([publicKey, signature]) =>
             server.verifySignature(message, signature, publicKey)
-              .then(function (valid) {
-                assert(valid);
-                
-                // Close the connection to the server.
-                server.close();
-                done();
-              });
-          });
-        });
-      });
-  });
-});
+              .then((valid) => {
+                assert(valid)
+              })
+          )
+        })
+      })
+    })
+})
 ```
 
 # Documentation
@@ -71,7 +55,7 @@ You can generate documentation in the `doc` subdirectory with the command `npm r
 
 # Copyright
 
-Copyright 2016 Eris Industries
+Copyright 2016 Monax
 
 This program is free software: you can redistribute it and/or modify
 it under the terms of the GNU General Public License as published by
