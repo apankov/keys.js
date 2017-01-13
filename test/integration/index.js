@@ -10,7 +10,7 @@ describe('a client for eris-keys', function () {
 
       // Open a connection to the server.
       return keys.serviceUrl('services', 'keys', 4767).then((url) => {
-        const server = keys.open(url)
+        const server = keys.connect(url)
 
         // Generate a new key pair.
         return server.generateKeyPair().then((keyPairId) => {
