@@ -6,7 +6,6 @@ var crypto = require('crypto')
 var ed = require('ed25519-supercop')
 var keys = rewire('../../lib')
 var nock = require('nock')
-var Promise = require('bluebird')
 var random = require('seed-random')('marmot')
 
 const mockExec = (portMap) =>
@@ -78,15 +77,11 @@ function addressFromKey (publicKey) {
 describe('a client for eris-keys', function () {
   var server, keyPair, address, identifier
 
-  before(function (done) {
+  before(function () {
     keyPair = ed.createKeyPair(randomSeed())
     address = addressFromKey(keyPair.publicKey)
     identifier = {address: address}
-
-    keys.open('http://localhost:4767/').then(function (opened) {
-      server = opened
-      done()
-    })
+    server = keys.open('http://localhost:4767/')
   })
 
   beforeEach(function () {
@@ -124,10 +119,6 @@ describe('a client for eris-keys', function () {
             ? 'true'
           : 'false'}
       })
-  })
-
-  after(function () {
-    server.close()
   })
 
   it('generates a new key pair', function () {

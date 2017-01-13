@@ -7,7 +7,6 @@
     "url": "https://github.com/eris-ltd/eris-keys.js/issues"
   },
   "dependencies": {
-    "bluebird": "3.4.7",
     "lodash": "4.17.4",
     "mz": "2.6.0",
     "pegjs": "0.10.0",
