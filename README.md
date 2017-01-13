@@ -1,5 +1,7 @@
 This is a JavaScript client library to facilitate interaction with an [Eris Keys](https://github.com/eris-ltd/eris-keys) server.
 
+Note:  Eris Keys does not expose an interface to get private keys.
+
 # Installation
 
 `$ npm install eris-keys`
