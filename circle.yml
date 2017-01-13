@@ -9,6 +9,10 @@ machine:
 
 dependencies:
   pre:
+    # CircleCI uses an old version of npm.
+    - npm install --global npm
+    - npm --version
+
     # Install Docker Machine because CircleCI's Docker support is hobbled.
     - "curl -L https://github.com/docker/machine/releases/download/$DOCKER_MACH\
       INE_VERSION/docker-machine-`uname -s`-`uname -m` > $HOME/bin/docker-machi\
