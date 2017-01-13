@@ -1,56 +1,57 @@
 {
   "name": "eris-keys",
-  "version": "0.4.1",
   "description": "a JavaScript client library for eris-keys",
-  "main": "lib/index.js",
-  "scripts": {
-    "precommit": "standard",
-    "doc": "jsdoc --configure JSDoc/conf.json --destination doc README.md lib",
-    "doc:watch": "watch 'npm run doc' lib",
-    "outdated": "ncu --error-level 2",
-    "publish": "npm run outdated && bundle-dependencies update && publish",
-    "test": "npm run unit && npm run integration",
-    "unit": "istanbul cover _mocha -- test/unit",
-    "integration": "ERIS_PULL_APPROVE=true eris services start keys --publish && mocha test/integration",
-    "posttest": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100"
+  "version": "0.4.2",
+  "author": "David Braun",
+  "bugs": {
+    "url": "https://github.com/eris-ltd/eris-keys.js/issues"
   },
+  "dependencies": {
+    "bluebird": "3.4.0",
+    "lodash": "4.13.1",
+    "pegjs": "0.9.0",
+    "request-promise": "3.0.0"
+  },
+  "devDependencies": {
+    "bundle-dependencies": "1.0.2",
+    "ed25519-supercop": "1.0.2",
+    "husky": "0.11.4",
+    "istanbul": "0.4.3",
+    "jsdoc": "3.4.0",
+    "mocha": "2.5.3",
+    "nock": "8.0.0",
+    "npm-check-updates": "2.6.7",
+    "publish": "0.6.0",
+    "rewire": "2.5.1",
+    "seed-random": "2.2.0",
+    "standard": "7.1.2",
+    "watch": "0.18.0"
+  },
+  "homepage": "https://github.com/eris-ltd/eris-keys.js#README.md",
+  "keywords": [
+    "Eris",
+    "Monax",
+    "blockchain",
+    "contracts",
+    "keys",
+    "ledger"
+  ],
+  "license": "GPL-3.0",
+  "main": "lib/index.js",
   "repository": {
     "type": "git",
     "url": "git+https://github.com/eris-ltd/eris-keys.js.git"
   },
-  "keywords": [
-    "Eris",
-    "blockchain",
-    "keys",
-    "ledger",
-    "contracts"
-  ],
-  "author": "David Braun",
-  "license": "GPL-3.0",
-  "bugs": {
-    "url": "https://github.com/eris-ltd/eris-keys.js/issues"
-  },
-  "homepage": "https://github.com/eris-ltd/eris-keys.js#README.md",
-  "devDependencies": {
-    "bundle-dependencies": "^1.0.2",
-    "ed25519-supercop": "^1.0.2",
-    "husky": "^0.11.4",
-    "istanbul": "^0.4.3",
-    "jsdoc": "^3.4.0",
-    "mocha": "^2.5.3",
-    "nock": "^8.0.0",
-    "npm-check-updates": "^2.6.7",
-    "pegjs": "^0.9.0",
-    "publish": "^0.6.0",
-    "rewire": "^2.5.1",
-    "seed-random": "^2.2.0",
-    "standard": "^7.1.2",
-    "watch": "^0.18.0"
-  },
-  "dependencies": {
-    "bluebird": "^3.4.0",
-    "lodash": "^4.13.1",
-    "request-promise": "^3.0.0"
+  "scripts": {
+    "doc": "jsdoc --configure JSDoc/conf.json --destination doc README.md lib",
+    "doc:watch": "watch 'npm run doc' lib",
+    "integration": "ERIS_PULL_APPROVE=true eris services start keys --publish && mocha test/integration",
+    "outdated": "ncu --error-level 2",
+    "posttest": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
+    "precommit": "standard",
+    "publish": "npm run outdated && bundle-dependencies update && publish",
+    "test": "npm run unit && npm run integration",
+    "unit": "istanbul cover _mocha -- test/unit"
   },
   "standard": {
     "globals": [

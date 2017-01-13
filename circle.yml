@@ -7,19 +7,18 @@ machine:
     version: 4.2.2
   environment:
     DISTRIBUTION: $(lsb_release --codename --short)
-    DOCKER_MACHINE_VERSION: "v0.6.0"
+    DOCKER_MACHINE_VERSION: "v0.8.2"
     MOCHA_FILE: "$CIRCLE_TEST_REPORTS/test-results.xml"
 
 dependencies:
   pre:
     # Install Docker Machine because CircleCI's Docker support is hobbled.
-    - curl -L https://github.com/docker/machine/releases/download/$DOCKER_MACHINE_VERSION/docker-machine-`uname -s`-`uname -m` > $HOME/bin/docker-machine && chmod +x $HOME/bin/docker-machine
+    - "curl -L https://github.com/docker/machine/releases/download/$DOCKER_MACH\
+      INE_VERSION/docker-machine-`uname -s`-`uname -m` > $HOME/bin/docker-machi\
+      ne && chmod +x $HOME/bin/docker-machine"
 
     # Install the Eris CLI.
-    - sudo apt-key adv --keyserver hkp://pool.sks-keyservers.net --recv-keys DDA1D0AB
-    - sudo su -c "echo deb https://apt.eris.industries $DISTRIBUTION main > /etc/apt/sources.list.d/eris.list"
-    - sudo apt-get --quiet update
-    - sudo apt-get install --assume-yes --quiet eris
+    - ./CircleCI/CLI.sh
 
 test:
   pre:
