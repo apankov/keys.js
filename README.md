@@ -16,7 +16,7 @@ First start a key server:
 'use strict'
 
 const assert = require('assert')
-const keys = require('../../lib')
+const keys = require('eris-keys')
 
 describe('a client for eris-keys', function () {
   it('generates a key, signs a message, and verifies the signature',
