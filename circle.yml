@@ -4,38 +4,22 @@ machine:
   node:
     version: 6.1.0
   environment:
-    DOCKER_MACHINE_VERSION: "v0.8.2"
+    DOCKER_MACHINE_VERSION: "v0.10.0"
     MOCHA_FILE: "$CIRCLE_TEST_REPORTS/test-results.xml"
 
-dependencies:
-  pre:
-    # Install Docker Machine because CircleCI's Docker support is hobbled.
-    - "curl -L https://github.com/docker/machine/releases/download/$DOCKER_MACH\
-      INE_VERSION/docker-machine-`uname -s`-`uname -m` > $HOME/bin/docker-machi\
-      ne && chmod +x $HOME/bin/docker-machine"
-
-    # Install the Eris CLI.
-    - ./CircleCI/CLI.sh
-
 test:
-  pre:
-    # Setting up the machine must happen in the "test" section instead of
-    # "dependencies" in case there's a failure of any kind to guarantee that the
-    # machine will be cleaned up.
-    - docker-machine create --driver digitalocean default
-    - eval $(docker-machine env default); ERIS_PULL_APPROVE=true eris init
+  # Setting up the machine must happen in the 'test' section instead of
+  # 'dependencies' in case there's a failure of any kind to guarantee that the
+  # machine will be cleaned up.
   override:
-    - npm run precommit
-    - npm run outdated
-    - eval $(docker-machine env default); npm test
+    - ./CircleCI/test.sh
   post:
-    - docker-machine rm -y default
+    - if [ "$CIRCLE_BRANCH" = "master" ]; then docker-machine rm -y default; fi
 
 deployment:
   npm:
     branch: master
     commands:
-      - JSDoc/publish.sh
-      - npm run bundle
+      - bundle-dependencies update
       - printf "$NPM_USERNAME\n$NPM_PASSWORD\n$NPM_EMAIL\n" | npm login
       - npm publish

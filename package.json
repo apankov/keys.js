@@ -1,38 +1,37 @@
 {
-  "name": "eris-keys",
-  "description": "a JavaScript client library for eris-keys",
+  "name": "@monax/keys",
+  "description": "a JavaScript client library for the Monax keys server",
   "version": "0.6.1",
   "author": "David Braun",
   "bugs": {
-    "url": "https://github.com/eris-ltd/eris-keys.js/issues"
+    "url": "https://github.com/monax/keys.js/issues"
   },
   "dependencies": {
     "lodash": "4.17.4",
     "mz": "2.6.0",
     "pegjs": "0.10.0",
     "ramda": "0.23.0",
-    "request": "2.79.0",
-    "request-promise": "4.1.1"
+    "request": "2.81.0",
+    "request-promise": "4.2.0"
   },
   "devDependencies": {
     "bundle-dependencies": "1.0.2",
     "ed25519-supercop": "1.0.2",
-    "husky": "0.12.0",
+    "husky": "0.13.3",
     "istanbul": "0.4.5",
     "jsdoc": "3.4.3",
-    "mocha": "3.2.0",
-    "nock": "9.0.2",
-    "npm-check-updates": "2.8.9",
+    "mocha": "3.3.0",
+    "nock": "9.0.13",
+    "npm-check-updates": "2.11.0",
     "seed-random": "2.2.0",
-    "standard": "8.6.0",
-    "watch": "1.0.1"
+    "standard": "10.0.2",
+    "watch": "1.0.2"
   },
   "engines": {
     "node": ">=6"
   },
-  "homepage": "https://github.com/eris-ltd/eris-keys.js#README.md",
+  "homepage": "https://github.com/monax/keys.js#README.md",
   "keywords": [
-    "Eris",
     "Monax",
     "blockchain",
     "contracts",
@@ -43,14 +42,12 @@
   "main": "lib/index.js",
   "repository": {
     "type": "git",
-    "url": "git+https://github.com/eris-ltd/eris-keys.js.git"
+    "url": "git+https://github.com/monax/keys.js.git"
   },
   "scripts": {
-    "bundle": "bundle-dependencies update",
     "doc": "jsdoc --configure JSDoc/conf.json --destination doc README.md lib",
     "doc:watch": "watch 'npm run doc' lib",
-    "integration": "ERIS_PULL_APPROVE=true eris services start keys --publish && mocha test/integration",
-    "outdated": "ncu --error-level 2",
+    "integration": "MONAX_PULL_APPROVE=true monax services start keys --publish && mocha test/integration",
     "posttest": "istanbul check-coverage --statements 100 --functions 100 --branches 100 --lines 100",
     "precommit": "standard",
     "test": "npm run unit && npm run integration",
