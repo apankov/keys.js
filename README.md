@@ -1,24 +1,24 @@
-This is a JavaScript client library to facilitate interaction with an [Eris Keys](https://github.com/eris-ltd/eris-keys) server.
+This is a JavaScript client library to facilitate interaction with a [Monax Keys](https://github.com/monax/keys) server.
 
-Note:  Eris Keys does not expose an interface to get private keys.
+Note:  Monax Keys does not expose an interface to get private keys.
 
 # Installation
 
-`$ npm install eris-keys`
+`$ npm install @monax/keys`
 
 # Usage
 
 First start a key server:
 
-`$ eris services start keys --publish`
+`$ monax services start keys --publish`
 
 ```JavaScript
 'use strict'
 
 const assert = require('assert')
-const keys = require('../../lib')
+const keys = require('@monax/keys')
 
-describe('a client for eris-keys', function () {
+describe('a client for monax-keys', function () {
   it('generates a key, signs a message, and verifies the signature',
     function () {
       this.timeout(10 * 1000)

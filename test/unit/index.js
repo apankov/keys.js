@@ -13,7 +13,7 @@ const mockExec = (portMap) =>
       ? '192.168.99.100'
       : portMap)
 
-describe('eris inspection', function () {
+describe('monax inspection', function () {
   it('gets the port mappings for a chain', function () {
     const exec = mockExec(`33121`)
 
@@ -26,7 +26,7 @@ describe('eris inspection', function () {
     })
   })
 
-  it('gets the port mapping for Eris Keys', function () {
+  it('gets the port mapping for Monax Keys', function () {
     const exec = mockExec('33128')
 
     return keys.serviceUrl('services', 'keys', 4767, {exec}).then((url) => {
@@ -38,10 +38,10 @@ describe('eris inspection', function () {
     })
   })
 
-  it('gets the port mapping for Eris Keys with localhost', function () {
+  it('gets the port mapping for Monax Keys with localhost', function () {
     const exec = (command) =>
         command === 'docker-machine ip $(docker-machine active)'
-          ? Promise.reject()
+          ? Promise.reject(new Error())
           : Promise.resolve(33128)
 
     return keys.serviceUrl('services', 'keys', 4767, {exec}).then((url) => {
@@ -62,7 +62,7 @@ function randomSeed () {
     seed.push(Math.floor(random() * 256))
   }
 
-  return Buffer(seed)
+  return Buffer.from(seed)
 }
 
 function addressFromKey (publicKey) {
@@ -73,7 +73,7 @@ function addressFromKey (publicKey) {
   return hash.digest('hex')
 }
 
-describe('a client for eris-keys', function () {
+describe('a client for monax-keys', function () {
   var server, keyPair, address, identifier
 
   before(function () {
@@ -95,13 +95,13 @@ describe('a client for eris-keys', function () {
       .reply(200, {Response: keyPair.publicKey.toString('hex')})
       .post('/pub', {name: 'badger'})
       .reply(200, {
-        Error: 'open ~/.eris/keys/names/badger: no such file or directory'
+        Error: 'open ~/.monax/keys/names/badger: no such file or directory'
       })
       .post('/sign')
       .reply(200, function (uri, request) {
         var message
 
-        message = Buffer(request.msg, 'hex')
+        message = Buffer.from(request.msg, 'hex')
 
         return {Response: ed.sign(message, keyPair.publicKey,
           keyPair.secretKey).toString('hex')}
@@ -110,9 +110,9 @@ describe('a client for eris-keys', function () {
       .reply(200, function (uri, request) {
         var message, signature, publicKey
 
-        message = Buffer(request.msg, 'hex')
-        signature = Buffer(request.sig, 'hex')
-        publicKey = Buffer(request.pub, 'hex')
+        message = Buffer.from(request.msg, 'hex')
+        signature = Buffer.from(request.sig, 'hex')
+        publicKey = Buffer.from(request.pub, 'hex')
 
         return {Response: ed.verify(signature, message, publicKey)
             ? 'true'

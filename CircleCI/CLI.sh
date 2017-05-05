@@ -2,18 +2,19 @@
 set -o errexit
 set -o xtrace
 
-# Install the Eris CLI.
+# Install Docker Machine because CircleCI's Docker support is hobbled.
+curl -L https://github.com/docker/machine/releases/download/\
+$DOCKER_MACHINE_VERSION/docker-machine-`uname -s`-`uname -m` > \
+$HOME/bin/docker-machine && chmod +x $HOME/bin/docker-machine
 
-if [ $CIRCLE_BRANCH = 'master' ]; then
-  sudo add-apt-repository https://apt.monax.io
-  curl -L https://apt.monax.io/APT-GPG-KEY | sudo apt-key add -
-  sudo apt-get --quiet update
-  sudo apt-get install --assume-yes --quiet eris
-else
-  go get github.com/eris-ltd/eris-cli/cmd/eris
-  cd $HOME/.go_workspace/src/github.com/eris-ltd/eris-cli/cmd/eris
-  git checkout develop
-  go install
-fi
+docker-machine create --driver digitalocean default
+eval $(docker-machine env default)
 
-eris version
+# Install Monax CLI.
+sudo add-apt-repository https://pkgs.monax.io/apt
+curl -L https://pkgs.monax.io/apt/APT-GPG-KEY | sudo apt-key add -
+sudo apt-get --quiet update
+sudo apt-get install --assume-yes --quiet monax
+monax init --yes
+
+npm test

@@ -3,7 +3,7 @@
 const assert = require('assert')
 const keys = require('../../lib')
 
-describe('a client for eris-keys', function () {
+describe('a client for monax-keys', function () {
   it('generates a key, signs a message, and verifies the signature',
     function () {
       this.timeout(10 * 1000)
